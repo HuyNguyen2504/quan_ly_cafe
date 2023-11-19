@@ -9,12 +9,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import MySQLdb as mdb
 
-
+i=0
+table_size=0
 class Ui_quan_ly_ban_khach(object):
     def setupUi(self, quan_ly_ban_khach):
         quan_ly_ban_khach.setObjectName("quan_ly_ban_khach")
-        quan_ly_ban_khach.resize(1031, 811)
+        quan_ly_ban_khach.resize(1031, 817)
         self.centralwidget = QtWidgets.QWidget(quan_ly_ban_khach)
         self.centralwidget.setObjectName("centralwidget")
         self.thong_ke_gr = QtWidgets.QGroupBox(self.centralwidget)
@@ -34,7 +36,7 @@ class Ui_quan_ly_ban_khach(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.exit.setFont(font)
-        self.exit.setStyleSheet("background-color: rgb(255, 0, 0);")
+        self.exit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.exit.setObjectName("exit")
         self.main = QtWidgets.QPushButton(self.thong_ke_gr)
         self.main.setGeometry(QtCore.QRect(30, 120, 171, 81))
@@ -169,19 +171,20 @@ class Ui_quan_ly_ban_khach(object):
         self.label_10.setObjectName("label_10")
         self.groupBox_2 = QtWidgets.QGroupBox(self.thong_ke_gr)
         self.groupBox_2.setGeometry(QtCore.QRect(220, 530, 771, 201))
+        self.groupBox_2.setMinimumSize(QtCore.QSize(771, 121))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.groupBox_2.setFont(font)
         self.groupBox_2.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.groupBox_2.setObjectName("groupBox_2")
         self.label_6 = QtWidgets.QLabel(self.groupBox_2)
-        self.label_6.setGeometry(QtCore.QRect(80, 50, 81, 31))
+        self.label_6.setGeometry(QtCore.QRect(80, 40, 81, 31))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(self.groupBox_2)
-        self.label_7.setGeometry(QtCore.QRect(340, 50, 91, 31))
+        self.label_7.setGeometry(QtCore.QRect(340, 40, 91, 31))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.label_7.setFont(font)
@@ -192,42 +195,27 @@ class Ui_quan_ly_ban_khach(object):
         font.setPointSize(14)
         self.label_8.setFont(font)
         self.label_8.setObjectName("label_8")
-        self.ma_ban1 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ma_ban1.setGeometry(QtCore.QRect(0, 80, 241, 31))
-        self.ma_ban1.setObjectName("ma_ban1")
-        self.ten_ban1 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ten_ban1.setGeometry(QtCore.QRect(240, 80, 281, 31))
-        self.ten_ban1.setObjectName("ten_ban1")
-        self.trang_thai1 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.trang_thai1.setGeometry(QtCore.QRect(520, 80, 251, 31))
-        self.trang_thai1.setObjectName("trang_thai1")
-        self.ma_ban2 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ma_ban2.setGeometry(QtCore.QRect(0, 110, 241, 31))
-        self.ma_ban2.setObjectName("ma_ban2")
-        self.ten_ban2 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ten_ban2.setGeometry(QtCore.QRect(240, 110, 281, 31))
-        self.ten_ban2.setObjectName("ten_ban2")
-        self.trang_thai2 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.trang_thai2.setGeometry(QtCore.QRect(520, 110, 251, 31))
-        self.trang_thai2.setObjectName("trang_thai2")
-        self.trang_thai3 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.trang_thai3.setGeometry(QtCore.QRect(520, 140, 251, 31))
-        self.trang_thai3.setObjectName("trang_thai3")
-        self.ma_ban3 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ma_ban3.setGeometry(QtCore.QRect(0, 140, 241, 31))
-        self.ma_ban3.setObjectName("ma_ban3")
-        self.ten_ban3 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ten_ban3.setGeometry(QtCore.QRect(240, 140, 281, 31))
-        self.ten_ban3.setObjectName("ten_ban3")
-        self.trang_thai4 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.trang_thai4.setGeometry(QtCore.QRect(520, 170, 251, 31))
-        self.trang_thai4.setObjectName("trang_thai4")
-        self.ma_ban4 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ma_ban4.setGeometry(QtCore.QRect(0, 170, 241, 31))
-        self.ma_ban4.setObjectName("ma_ban4")
-        self.ten_ban4 = QtWidgets.QLineEdit(self.groupBox_2)
-        self.ten_ban4.setGeometry(QtCore.QRect(240, 170, 281, 31))
-        self.ten_ban4.setObjectName("ten_ban4")
+        self.scrollArea = QtWidgets.QScrollArea(self.groupBox_2)
+        self.scrollArea.setGeometry(QtCore.QRect(0, 76, 771, 121))
+        self.scrollArea.setMinimumSize(QtCore.QSize(771, 121))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 748, 1218))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.initial_button_texts = ["Button 1", "Button 2", "Button 3", "Button 4"]
+        self.buttons = []
+
+        self.create_initial_buttons()
+        self.frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
+        self.frame.setMinimumSize(QtCore.QSize(0, 1200))
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.verticalLayout.addWidget(self.frame)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         quan_ly_ban_khach.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(quan_ly_ban_khach)
@@ -235,7 +223,7 @@ class Ui_quan_ly_ban_khach(object):
 
     def retranslateUi(self, quan_ly_ban_khach):
         _translate = QtCore.QCoreApplication.translate
-        quan_ly_ban_khach.setWindowTitle(_translate("quan_ly_ban_khach", "Quản Lý Bàn"))
+        quan_ly_ban_khach.setWindowTitle(_translate("quan_ly_ban_khach", "MainWindow"))
         self.check.setText(_translate("quan_ly_ban_khach", "Hóa Đơn"))
         self.exit.setText(_translate("quan_ly_ban_khach", "Đăng Xuất"))
         self.main.setText(_translate("quan_ly_ban_khach", "Trang chủ"))
@@ -260,6 +248,42 @@ class Ui_quan_ly_ban_khach(object):
         self.label_7.setText(_translate("quan_ly_ban_khach", "Tên Bàn"))
         self.label_8.setText(_translate("quan_ly_ban_khach", "Trạng Thái"))
 
+    def create_initial_buttons(self):
+        # Xóa các nút hiện tại
+        global id
+        self.clear_buttons()
+        i=0
+        # Tạo và thêm các nút ban đầu
+        for text in self.initial_button_texts:
+            button = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+            font = QtGui.QFont()
+            font.setPointSize(14)
+            button.setFont(font)
+            button.setObjectName(f"{i+1}")
+            button.setText(f"   {i+1}                                   {i+1}                                    off")
+            
+            button.setCheckable(True)  # Cho phép nút bấm có trạng thái đã được bấm và trạng thái ban đầu
+            button.clicked.connect(lambda checked, btn=button: self.handle_button_click(btn)) # Truyền đối tượng nút bấm vào phương thức xử lý sự kiện
+            self.verticalLayout.addWidget(button)
+            self.buttons.append(button)
+            i+=1
+
+    def clear_buttons(self):
+        # Xóa các nút khỏi frame
+        for button in self.buttons:
+            self.verticalLayout.removeWidget(button)
+            button.deleteLater()  # Xóa đối tượng nút bấm
+
+        self.buttons = []
+
+    def handle_button_click(self, button):
+        global id
+        id=str(button.objectName())
+        if button.isChecked():
+            button.setText(f"   {id}                                   {id}                                    on")
+        else:
+            button.setText(f"   {id}                                   {id}                                    off")
+id=0
 
 if __name__ == "__main__":
     import sys
